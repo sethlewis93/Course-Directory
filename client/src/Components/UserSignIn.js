@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function UserSignIn() {
   return (
@@ -23,7 +24,7 @@ export default function UserSignIn() {
         </form>
         <p>
           Don't have a user account? Click here to{" "}
-          <a href="sign-up.html">sign up</a>!
+          <Link to="/signup">sign up</Link>!
         </p>
       </div>
     </main>

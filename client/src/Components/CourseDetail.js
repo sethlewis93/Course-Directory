@@ -9,7 +9,6 @@ export default function CourseDetail() {
   console.log(courseId);
 
   useEffect(() => {
-    // Using ID 3 to test. Will add context later.
     fetch(`${apiBaseUrl}${courseId}`)
       .then((res) => res.json())
       .then((data) => setCourseDetails(data))
@@ -19,7 +18,7 @@ export default function CourseDetail() {
   const {
     description,
     title,
-    student: { firstName, lastName },
+    student: { firstName, lastName } = {},
   } = courseDetails;
 
   return (

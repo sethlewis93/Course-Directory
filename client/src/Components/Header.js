@@ -1,19 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
     <header>
       <div className="wrap header--flex">
         <h1 className="header--logo">
-          <a href="index.html">Courses</a>
+          <Link to="/">Courses</Link>
         </h1>
         <nav>
           <ul className="header--signedout">
             <li>
-              <a href="sign-up.html">Sign Up</a>
+              <Link to="/signup">Sign Up</Link>
             </li>
             <li>
-              <a href="sign-in.html">Sign In</a>
+              <Link to="/signin">Sign In</Link>
             </li>
           </ul>
         </nav>
