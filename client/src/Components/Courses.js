@@ -13,6 +13,8 @@ export default function Courses() {
       .catch((err) => console.log(err));
   }, []);
 
+  console.log(courses);
+
   const courseGrid = courses.map((c, index) => (
     <NavLink
       to={`courses/${c.id}`}

@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { apiBaseUrl } from "../config";
 
 export default function CourseDetail() {
   const [courseDetails, setCourseDetails] = useState("");
+  const location = useLocation();
+  const courseId = location.pathname;
+  console.log(courseId);
 
   useEffect(() => {
     // Using ID 3 to test. Will add context later.
-    fetch(`${apiBaseUrl}/courses/3`)
+    fetch("localhost:5000/api/courses/1")
       .then((res) => res.json())
       .then((data) => setCourseDetails(data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [courseId]);
 
   const {
     description,

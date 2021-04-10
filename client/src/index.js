@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "./Context";
+// import { Provider } from "./Context";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <Provider>
+  <React.Fragment>
     <App />
-  </Provider>,
+  </React.Fragment>,
   document.getElementById("root")
 );
 

@@ -12,8 +12,8 @@ import UserSignUp from "./Components/UserSignUp";
 import UserSignOut from "./Components/UserSignOut";
 import NotFound from "./Components/NotFound";
 
-import withContext from "./Context";
-const CoursesWithContext = withContext(Courses);
+// import withContext from "./Context";
+// const CoursesWithContext = withContext(Courses);
 
 export default function App() {
   return (
@@ -21,7 +21,7 @@ export default function App() {
       <div>
         <Header />
         <Switch>
-          <Route exact path="/" component={CoursesWithContext} />
+          <Route exact path="/" component={Courses} />
           <Route path="/courses/create" component={CreateCourses} />
           <Route path="/courses/:id" component={CourseDetail} />
           <Route path="/courses/:id/update" component={UpdateCourses} />
