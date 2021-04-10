@@ -10,7 +10,7 @@ export default function CourseDetail() {
 
   useEffect(() => {
     // Using ID 3 to test. Will add context later.
-    fetch("localhost:5000/api/courses/1")
+    fetch(`${apiBaseUrl}${courseId}`)
       .then((res) => res.json())
       .then((data) => setCourseDetails(data))
       .catch((err) => console.log(err));
