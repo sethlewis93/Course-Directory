@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { apiBaseUrl } from "../config";
 
 export default function CourseDetail(props) {
@@ -34,9 +34,9 @@ export default function CourseDetail(props) {
     <main>
       <div className="actions--bar">
         <div className="wrap">
-          <a className="button" href="update-course.html">
+          <Link className="button" to="/courses/:id/update">
             Update Course
-          </a>
+          </Link>
           <a className="button" onClick={remove} href="/">
             Delete Course
           </a>
