@@ -1,32 +1,96 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Form from "./Form";
 
-export default function UserSignIn() {
-  return (
-    <main>
-      <div class="form--centered">
-        <h2>Sign In</h2>
+export default class UserSignIn extends Component {
+  state = {
+    username: "",
+    password: "",
+    errors: [],
+  };
 
-        <form>
-          <label for="emailAddress">Email Address</label>
-          <input id="emailAddress" name="emailAddress" type="email" value="" />
-          <label for="password">Password</label>
-          <input id="password" name="password" type="password" value="" />
-          <button class="button" type="submit">
-            Sign In
-          </button>
-          <button
-            class="button button-secondary"
-            onclick="event.preventDefault(); location.href='index.html';"
-          >
-            Cancel
-          </button>
-        </form>
-        <p>
-          Don't have a user account? Click here to{" "}
-          <Link to="/signup">sign up</Link>!
-        </p>
+  render() {
+    const { username, password, errors } = this.state;
+
+    return (
+      <div className="bounds">
+        <div className="grid-33 centered signin">
+          <h1>Sign In</h1>
+          <Form
+            cancel={this.cancel}
+            errors={errors}
+            submit={this.submit}
+            submitButtonText="Sign In"
+            elements={() => (
+              <React.Fragment>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  value={username}
+                  onChange={this.change}
+                  placeholder="User Name"
+                />
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={this.change}
+                  placeholder="Password"
+                />
+              </React.Fragment>
+            )}
+          />
+          <p>
+            Don't have a user account? <Link to="/signup">Click here</Link> to
+            sign up!
+          </p>
+        </div>
       </div>
-    </main>
-  );
+    );
+  }
+
+  change = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState(() => {
+      return {
+        [name]: value,
+      };
+    });
+  };
+
+  submit = () => {
+    const { context } = this.props;
+    // 'from' passed to history.push(from) contains info about pathname & authenitcated user redirected "from"...
+    // ...this.props.location.state
+    // OR if user submits sign in form w/o prev visiting protected route, they will navigate to...
+    // ..."/authenticated" by default
+    const { from } = this.props.location.state || {
+      from: { pathname: "/authenticated" },
+    };
+    const { username, password } = this.state;
+    context.actions
+      .signIn(username, password)
+      .then((user) => {
+        if (user === null) {
+          this.setState(() => {
+            return { errors: ["Sign-in was unsuccessful"] };
+          });
+        } else {
+          this.props.history.push("/authenticated");
+          console.log(`SUCCESS! ${username} is now signed in`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/error");
+      });
+  };
+
+  cancel = () => {
+    this.props.history.push("/");
+  };
 }
