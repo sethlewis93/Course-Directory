@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { apiBaseUrl } from "../config";
 
-export default function CourseDetail() {
+export default function CourseDetail(props) {
   const [courseDetails, setCourseDetails] = useState([]);
   const location = useLocation();
   const courseId = location.pathname;
@@ -14,7 +14,7 @@ export default function CourseDetail() {
       .catch((err) => console.log(err));
   }, [courseId]);
 
-  // materialsNeeded not rendering separate list items b/c "const materials = courseDetails.map(material => {}) is 'not a function' "
+  // materialsNeeded not rendering separate list items b/c "const materials = courseDetails.map(detail => {<li>detail.materialsNeeded</li>}) is 'not a function' "
   const {
     description,
     title,
@@ -23,6 +23,13 @@ export default function CourseDetail() {
     materialsNeeded,
   } = courseDetails;
 
+  // When called, should delete course at the current courseId
+  const remove = () => {
+    // returns: 'Uncaught TypeError: can't access property "actions", context is undefined'
+    const { context } = props;
+    context.actions.delete(courseId);
+  };
+
   return (
     <main>
       <div className="actions--bar">
@@ -30,7 +37,7 @@ export default function CourseDetail() {
           <a className="button" href="update-course.html">
             Update Course
           </a>
-          <a className="button" href="/">
+          <a className="button" onClick={remove} href="/">
             Delete Course
           </a>
           <a className="button button-secondary" href="index.html">

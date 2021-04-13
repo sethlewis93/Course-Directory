@@ -10,7 +10,7 @@ export class Provider extends Component {
   }
 
   render() {
-    const value = { data: this.data };
+    const value = { data: this.data, actions: { delete: this.delete } };
     return (
       <Context.Provider value={value}>{this.props.children}</Context.Provider>
     );
@@ -19,6 +19,15 @@ export class Provider extends Component {
   signIn = async () => {};
 
   signOut = () => {};
+
+  delete = async () => {
+    const course = await this.data.getCourse();
+    if (course !== null) {
+      course.destroy();
+    } else {
+      throw new Error();
+    }
+  };
 }
 
 export const Consumer = Context.Consumer;
