@@ -1,20 +1,116 @@
-import React, { useState } from "react";
+import React from "react";
 
-// Currently attempting to set state when changes occur inside form elements
-export default function CreateCourse() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [estimatedTime, setTime] = useState("");
-  const [materialsNeeded, setMaterials] = useState("");
-  const [author, setAuthor] = useState("");
+export default class CreateCourse extends React.Component {
+  state = {
+    username: "",
+    password: "",
+    title: "",
+    author: "",
+    description: "",
+    estimatedTime: "",
+    materialsNeeded: "",
+    errors: [],
+  };
 
-  const submit = () => {
+  render() {
+    const {
+      title,
+      author,
+      description,
+      estimatedTime,
+      materialsNeeded,
+    } = this.state;
+
+    return (
+      <main>
+        <div className="wrap">
+          <h2>Create Course</h2>
+          {/* <div className="validation--errors">
+          <h3>Validation Errors</h3>
+          <ul>
+            <li>Please provide a value for "Title"</li>
+            <li>Please provide a value for "Description"</li>
+          </ul>
+        </div> */}
+          <form>
+            <div className="main--flex">
+              <div>
+                <label>Course Title</label>
+                <input
+                  id="title"
+                  name="title"
+                  type="text"
+                  value={title}
+                  onChange={this.change}
+                />
+
+                <label>Course Author</label>
+                <input
+                  id="author"
+                  name="author"
+                  type="text"
+                  value={author}
+                  onChange={this.change}
+                />
+
+                <label>Course Description</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={description}
+                  onChange={this.change}
+                />
+              </div>
+              <div>
+                <label>Estimated Time</label>
+                <input
+                  id="estimatedTime"
+                  name="estimatedTime"
+                  type="text"
+                  value={estimatedTime}
+                  onChange={this.change}
+                />
+                <label>Materials Needed</label>
+                <textarea
+                  id="materialsNeeded"
+                  name="materialsNeeded"
+                  value={materialsNeeded}
+                  onChange={this.change}
+                />
+              </div>
+            </div>
+            <button className="button" type="submit" onSubmit={this.submit}>
+              Create Course
+            </button>
+            <button className="button button-secondary" onClick={this.cancel}>
+              Cancel
+            </button>
+          </form>
+        </div>
+      </main>
+    );
+  }
+  submit = () => {
     const { context } = this.props;
+    const { username, password } = this.state;
+    const {
+      title,
+      author,
+      description,
+      estimatedTime,
+      materialsNeeded,
+    } = this.state;
 
-    const course = { title, description, estimatedTime, materialsNeeded };
+    const course = {
+      title,
+      author,
+      description,
+      estimatedTime,
+      materialsNeeded,
+    };
 
     context.data
-      .createCourse(course)
+      .createCourse(username, password, course)
       .then((errors) => {
         if (errors.length) {
           this.setState({ errors });
@@ -29,7 +125,7 @@ export default function CreateCourse() {
       });
   };
 
-  const change = (event) => {
+  change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
 
@@ -40,72 +136,7 @@ export default function CreateCourse() {
     });
   };
 
-  return (
-    <main>
-      <div className="wrap">
-        <h2>Create Course</h2>
-        {/* <div className="validation--errors">
-          <h3>Validation Errors</h3>
-          <ul>
-            <li>Please provide a value for "Title"</li>
-            <li>Please provide a value for "Description"</li>
-          </ul>
-        </div> */}
-        <form>
-          <div className="main--flex">
-            <div>
-              <label for="courseTitle">Course Title</label>
-              <input
-                id="courseTitle"
-                name="courseTitle"
-                type="text"
-                value={title}
-                onChange={change}
-              />
-
-              <label for="courseAuthor">Course Author</label>
-              <input
-                id="courseAuthor"
-                name="courseAuthor"
-                type="text"
-                value={author}
-                onChange={change}
-              />
-
-              <label for="courseDescription">Course Description</label>
-              <textarea
-                id="courseDescription"
-                name="courseDescription"
-                onChange={change}
-              ></textarea>
-            </div>
-            <div>
-              <label for="estimatedTime">Estimated Time</label>
-              <input
-                id="estimatedTime"
-                name="estimatedTime"
-                type="text"
-                value={estimatedTime}
-                onChange={change}
-              />
-
-              <label for="materialsNeeded">Materials Needed</label>
-              <textarea id="materialsNeeded" name="materialsNeeded">
-                onChange={change}
-              </textarea>
-            </div>
-          </div>
-          <button className="button" type="submit" onSubmit={submit}>
-            Create Course
-          </button>
-          <button
-            className="button button-secondary"
-            onclick="event.preventDefault(); location.href='index.html';"
-          >
-            Cancel
-          </button>
-        </form>
-      </div>
-    </main>
-  );
+  cancel = () => {
+    this.props.history.push("/");
+  };
 }
