@@ -17,6 +17,7 @@ import withContext from "./Context";
 const CourseDetailWithContext = withContext(CourseDetail);
 const UserSignUpWithContext = withContext(UserSignUp);
 const CreateCoursesWithContext = withContext(CreateCourses);
+const UpdateCoursesWithContext = withContext(UpdateCourses);
 
 export default function App() {
   return (
@@ -27,7 +28,10 @@ export default function App() {
           <Route exact path="/" component={Courses} />
           <Route path="/courses/create" component={CreateCoursesWithContext} />
           <Route path="/courses/:id" component={CourseDetailWithContext} />
-          <Route path="/courses/:id/update" component={UpdateCourses} />
+          <Route
+            path="/courses/:id/update"
+            component={UpdateCoursesWithContext}
+          />
           <Route path="/signin" component={UserSignIn} />
           <Route path="/signup" component={UserSignUpWithContext} />
           <Route path="/signout" component={UserSignOut} />

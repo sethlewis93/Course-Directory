@@ -35,15 +35,15 @@ export default function CourseDetail(props) {
     <main>
       <div className="actions--bar">
         <div className="wrap">
-          <Link className="button" to="/courses/:id/update">
+          <Link className="button" to={`/courses/${id}/update`}>
             Update Course
           </Link>
           <Link className="button" onClick={deleteCourse} to="/">
             Delete Course
           </Link>
-          <a className="button button-secondary" href="index.html">
+          <Link className="button button-secondary" to="/">
             Return to List
-          </a>
+          </Link>
         </div>
       </div>
 

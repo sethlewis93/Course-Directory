@@ -98,6 +98,21 @@ export default class Data {
     }
   }
 
+  async updateCourse(course) {
+    const response = await this.api("/courses/:id", "PUT", course);
+    if (response.status === 201) {
+      return [];
+    } else if (response.status === 400) {
+      return response.json().then((data) => {
+        return data.errors;
+      });
+    } else {
+      return response.json().then((error) => {
+        console.log(error);
+      });
+    }
+  }
+
   async deleteCourse(username, password, courseId) {
     const response = await this.api(
       `/courses/:${courseId}`,
