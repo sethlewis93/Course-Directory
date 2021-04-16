@@ -1,7 +1,13 @@
 import { apiBaseUrl } from "./config";
 
 export default class Data {
-  api(path, method = "GET", body = null) {
+  api(
+    path,
+    method = "GET",
+    body = null,
+    requiresAuth = false,
+    credentials = null
+  ) {
     const url = apiBaseUrl + path;
 
     const options = {
@@ -15,6 +21,19 @@ export default class Data {
       options.body = JSON.stringify(body);
     }
 
+    if (requiresAuth) {
+      //... encode user credentials AND...
+      const encodedCredentials = btoa(
+        // create base-64 encoded string which we use to encode 'username' and 'password'...
+        // ...pass credentials to api() method
+        // credentials passed as object containing 'username' and 'password' properties
+        `${credentials.username}:${credentials.password}`
+      );
+      //... set HTTP Authorization req header to BASIC Auth type and...
+      // ... set Authorization property to options.headers...
+      //...It now holds credentials to authenticate client with server
+      options.headers["Authorization"] = `Basic ${encodedCredentials}`;
+    }
     return fetch(url, options);
   }
 
@@ -74,17 +93,29 @@ export default class Data {
     }
   }
 
-  async deleteCourse(course) {
-    const response = await this.api("/courses/:id", "DELETE", course);
+  async deleteCourse(username, password, courseId) {
+    const response = await this.api(
+      `/courses/:${courseId}`,
+      "DELETE",
+      null,
+      true,
+      {
+        username,
+        password,
+      }
+    );
     if (response.status === 204) {
       console.log("Course deleted");
       return [];
     } else if (response.status === 400) {
       return response.json().then((data) => {
+        console.log("Course Id does not exist");
         return data.errors;
       });
     } else {
-      throw new Error();
+      return response.json().then((error) => {
+        console.log(error);
+      });
     }
   }
 }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { apiBaseUrl } from "../config";
 
 export default function CourseDetail(props) {
   const [courseDetails, setCourseDetails] = useState([]);
   const location = useLocation();
   const courseId = location.pathname;
+  const { id } = useParams();
 
   useEffect(() => {
     fetch(`${apiBaseUrl}${courseId}`)
@@ -18,16 +19,16 @@ export default function CourseDetail(props) {
   const {
     description,
     title,
-    student: { firstName, lastName } = {},
+    student: { firstName, lastName, emailAddress, password } = {},
     estimatedTime,
     materialsNeeded,
   } = courseDetails;
 
-  // When called, should delete course at the current courseId
-  const remove = () => {
-    // returns: 'Uncaught TypeError: can't access property "actions", context is undefined'
+  const username = emailAddress;
+
+  const deleteCourse = () => {
     const { context } = props;
-    context.actions.delete(courseId);
+    context.data.deleteCourse(username, password, id);
   };
 
   return (
@@ -37,9 +38,9 @@ export default function CourseDetail(props) {
           <Link className="button" to="/courses/:id/update">
             Update Course
           </Link>
-          <a className="button" onClick={remove} href="/">
+          <Link className="button" onClick={deleteCourse} to="/">
             Delete Course
-          </a>
+          </Link>
           <a className="button button-secondary" href="index.html">
             Return to List
           </a>
