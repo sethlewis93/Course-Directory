@@ -4,13 +4,13 @@ import Form from "./Form";
 
 export default class UserSignIn extends Component {
   state = {
-    username: "",
+    emailAddress: "",
     password: "",
     errors: [],
   };
 
   render() {
-    const { username, password, errors } = this.state;
+    const { emailAddress, password, errors } = this.state;
 
     return (
       <div className="form--centered">
@@ -23,10 +23,10 @@ export default class UserSignIn extends Component {
           elements={() => (
             <React.Fragment>
               <input
-                id="username"
-                name="username"
+                id="emailAddress"
+                name="emailAddress"
                 type="text"
-                value={username}
+                value={emailAddress}
                 onChange={this.change}
                 placeholder="User Name"
               />
@@ -60,7 +60,24 @@ export default class UserSignIn extends Component {
     });
   };
 
-  submit = () => {};
+  submit = () => {
+    const { context } = this.props;
+    const { emailAddress, password } = this.state;
+    context.actions
+      .signIn(emailAddress, password)
+      .then((user) => {
+        if (user === null) {
+          this.setState(() => ({ errors: ["Sign-in unseccessful"] }));
+        } else {
+          this.props.history.push("/authenticated");
+          console.log(`SUCCESS: ${emailAddress} is now signed in`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/error");
+      });
+  };
 
   cancel = () => {
     this.props.history.push("/");
