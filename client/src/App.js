@@ -36,11 +36,11 @@ export default function App() {
             path="/courses/create"
             component={CreateCoursesWithContext}
           />
-          <Route path="/courses/:id" component={CourseDetailWithContext} />
           <PrivateRoute
             path="/courses/:id/update"
             component={UpdateCoursesWithContext}
           />
+          <Route path="/courses/:id" component={CourseDetailWithContext} />
           <Route path="/signin" component={UserSignInWithContext} />
           <Route path="/signup" component={UserSignUpWithContext} />
           <PrivateRoute path="/authenticated" component={AuthUserWithContext} />
