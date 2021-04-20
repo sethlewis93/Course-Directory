@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { apiBaseUrl } from "../config";
 
 export default function CourseDetail(props) {
@@ -24,9 +24,6 @@ export default function CourseDetail(props) {
     estimatedTime,
     materialsNeeded,
   } = courseDetails;
-
-  console.log(courseDetails);
-  // console.log(userId);
 
   const deleteCourse = () => {
     const username = emailAddress;
