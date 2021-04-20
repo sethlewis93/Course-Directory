@@ -30,12 +30,14 @@ export default function CourseDetail(props) {
     context.data.deleteCourse(username, password, courseId);
   };
 
+  console.log(courseId);
+
   return (
     <main>
       <div className="actions--bar">
         {authUser && authUser.id === id ? (
           <div className="wrap">
-            <Link className="button" to={`/courses/${courseId}/update`}>
+            <Link className="button" to={`${courseId}/update`}>
               Update Course
             </Link>
             <Link className="button" onClick={deleteCourse} to="/">
