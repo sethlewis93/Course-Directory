@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import { apiBaseUrl } from "../config";
 
 export default function CourseDetail(props) {
@@ -30,7 +31,7 @@ export default function CourseDetail(props) {
     context.data.deleteCourse(username, password, courseId);
   };
 
-  console.log(courseId);
+  console.log(typeof description);
 
   return (
     <main>
@@ -65,15 +66,16 @@ export default function CourseDetail(props) {
               <h3 className="course--detail--title">Course</h3>
               <h4 className="course--name">{title}</h4>
               <p>{`${firstName} ${lastName}`}</p>
-
-              <p>{description}</p>
+              <ReactMarkdown>{description}</ReactMarkdown>
             </div>
             <div>
               <h3 className="course--detail--title">Estimated Time</h3>
               <p>{estimatedTime}</p>
 
               <h3 className="course--detail--title">Materials Needed</h3>
-              <ul className="course--detail--list">{materialsNeeded}</ul>
+              <ReactMarkdown className="course--detail--list">
+                {materialsNeeded}
+              </ReactMarkdown>
             </div>
           </div>
         </form>
