@@ -3,11 +3,12 @@ import Form from "./Form";
 
 export default class CreateCourse extends React.Component {
   state = {
-    username: "",
+    emailAddress: "",
     password: "",
     title: "",
     author: "",
     description: "",
+    userId: "",
     estimatedTime: "",
     materialsNeeded: "",
     errors: [],
@@ -83,23 +84,19 @@ export default class CreateCourse extends React.Component {
               </>
             )}
           />
-          {/* <button className="button" type="submit" onSubmit={this.submit}>
-              Create Course
-            </button> */}
-          {/* <button className="button button-secondary" onClick={this.cancel}>
-              Cancel
-            </button> */}
         </div>
       </main>
     );
   }
   submit = () => {
     const { context } = this.props;
-    const { username, password } = this.state;
     const {
+      emailAddress,
+      password,
       title,
       author,
       description,
+      userId,
       estimatedTime,
       materialsNeeded,
     } = this.state;
@@ -108,17 +105,19 @@ export default class CreateCourse extends React.Component {
       title,
       author,
       description,
+      userId,
       estimatedTime,
       materialsNeeded,
     };
 
     context.data
-      .createCourse(username, password, course)
+      .createCourse(emailAddress, password, course)
       .then((errors) => {
         if (errors.length) {
           this.setState({ errors });
           console.log(errors);
         } else {
+          this.props.history.push("/courses");
           console.log(`${course} has been sucessfully created`);
         }
       })
