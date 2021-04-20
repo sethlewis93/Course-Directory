@@ -24,9 +24,8 @@ export default function CourseDetail(props) {
     materialsNeeded,
   } = courseDetails;
 
-  const username = emailAddress;
-
   const deleteCourse = () => {
+    const username = emailAddress;
     const { context } = props;
     context.data.deleteCourse(username, password, id);
   };

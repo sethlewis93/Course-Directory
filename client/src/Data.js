@@ -98,8 +98,11 @@ export default class Data {
     }
   }
 
-  async updateCourse(course) {
-    const response = await this.api("/courses/:id", "PUT", course);
+  async updateCourse(username, password, courseId) {
+    const response = await this.api(`/courses/${courseId}`, "PUT", null, true, {
+      username,
+      password,
+    });
     if (response.status === 201) {
       return [];
     } else if (response.status === 400) {

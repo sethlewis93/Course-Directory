@@ -2,65 +2,8 @@ import React from "react";
 import Form from "./Form";
 import { apiBaseUrl } from "../config";
 
-export default class UpdateCourse {
-  render() {
-    return (
-      <main>
-        <div class="wrap">
-          <h2>Update Course</h2>
-          <form>
-            <div class="main--flex">
-              <div>
-                <label for="courseTitle">Course Title</label>
-                <input
-                  id="courseTitle"
-                  name="courseTitle"
-                  type="text"
-                  value="Build a Basic Bookcase"
-                />
-
-                <label for="courseAuthor">Course Author</label>
-                <input
-                  id="courseAuthor"
-                  name="courseAuthor"
-                  type="text"
-                  value="Joe Smith"
-                />
-
-                <label for="courseDescription">Course Description</label>
-                <textarea id="courseDescription" name="courseDescription" />
-              </div>
-              <div>
-                <label for="estimatedTime">Estimated Time</label>
-                <input
-                  id="estimatedTime"
-                  name="estimatedTime"
-                  type="text"
-                  value="14 hours"
-                />
-
-                <label for="materialsNeeded">Materials Needed</label>
-                <textarea id="materialsNeeded" name="materialsNeeded" />
-              </div>
-            </div>
-            <button class="button" type="submit">
-              Update Course
-            </button>
-            <button
-              class="button button-secondary"
-              onclick="event.preventDefault(); location.href='index.html';"
-            >
-              Cancel
-            </button>
-          </form>
-        </div>
-      </main>
-    );
-  }
-}
-
-/**
- * state = {
+export default class UpdateCourse extends React.Component {
+  state = {
     title: "",
     author: "",
     description: "",
@@ -68,8 +11,9 @@ export default class UpdateCourse {
     materials: "",
     errors: [],
   };
+
   render() {
-    const { errors } = this.state;
+    const { title, author, description, time, materials, errors } = this.state;
     return (
       <Form
         cancel={this.cancel}
@@ -80,32 +24,51 @@ export default class UpdateCourse {
           <>
             <div className="main--flex">
               <div>
-                <label for="title"> Course Title </label>
-                <input id="title" name="title" type="text" value="" />
+                <label htmlFor="title"> Course Title </label>
+                <input
+                  id="title"
+                  name="title"
+                  type="text"
+                  value={title}
+                  onChange={this.change}
+                />
 
-                <label for="author">Course Author</label>
-                <input id="author" name="author" type="text" value="" />
+                <label htmlFor="author">Course Author</label>
+                <input
+                  id="author"
+                  name="author"
+                  type="text"
+                  value={author}
+                  onChange={this.change}
+                />
 
-                <label for="description">Course Description</label>
-                <textarea id="description" name="description" />
+                <label htmlFor="description">Course Description</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={description}
+                  onChange={this.change}
+                />
               </div>
               <div>
-                <label for="time">Estimated Time</label>
-                <input id="time" name="time" type="text" value="" />
+                <label htmlFor="time">Estimated Time</label>
+                <input
+                  id="time"
+                  name="time"
+                  type="text"
+                  value={time}
+                  onChange={this.change}
+                />
 
-                <label for="materials">Materials Needed</label>
-                <textarea id="materials" name="materials"></textarea>
+                <label htmlFor="materials">Materials Needed</label>
+                <textarea
+                  id="materials"
+                  name="materials"
+                  value={materials}
+                  onChange={this.change}
+                />
               </div>
             </div>
-            <button class="button" type="submit">
-              Update Course
-            </button>
-            <button
-              class="button button-secondary"
-              onclick="event.preventDefault(); location.href='index.html';"
-            >
-              Cancel
-            </button>
           </>
         )}
       />
@@ -147,4 +110,4 @@ export default class UpdateCourse {
   cancel = () => {
     this.props.history.push("/");
   };
- */
+}
