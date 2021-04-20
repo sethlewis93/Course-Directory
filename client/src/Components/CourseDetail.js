@@ -6,7 +6,8 @@ export default function CourseDetail(props) {
   const [courseDetails, setCourseDetails] = useState([]);
   const location = useLocation();
   const courseId = location.pathname;
-  const { id } = useParams();
+  const { context } = props;
+  const authUser = context.authenticatedUser;
 
   useEffect(() => {
     fetch(`${apiBaseUrl}${courseId}`)
@@ -19,31 +20,42 @@ export default function CourseDetail(props) {
   const {
     description,
     title,
-    student: { firstName, lastName, emailAddress, password } = {},
+    student: { id, firstName, lastName, emailAddress, password } = {},
     estimatedTime,
     materialsNeeded,
   } = courseDetails;
 
+  console.log(courseDetails);
+  // console.log(userId);
+
   const deleteCourse = () => {
     const username = emailAddress;
-    const { context } = props;
-    context.data.deleteCourse(username, password, id);
+    context.data.deleteCourse(username, password, courseId);
   };
 
   return (
     <main>
       <div className="actions--bar">
-        <div className="wrap">
-          <Link className="button" to={`/courses/${id}/update`}>
-            Update Course
-          </Link>
-          <Link className="button" onClick={deleteCourse} to="/">
-            Delete Course
-          </Link>
-          <Link className="button button-secondary" to="/">
-            Return to List
-          </Link>
-        </div>
+        {authUser && authUser.id === id ? (
+          <div className="wrap">
+            <Link className="button" to={`/courses/${courseId}/update`}>
+              Update Course
+            </Link>
+            <Link className="button" onClick={deleteCourse} to="/">
+              Delete Course
+            </Link>
+            <Link className="button button-secondary" to="/">
+              Return to List
+            </Link>
+          </div>
+        ) : (
+          <div className="wrap">
+            {" "}
+            <Link className="button button-secondary" to="/">
+              Return to List
+            </Link>
+          </div>
+        )}
       </div>
 
       <div className="wrap">
