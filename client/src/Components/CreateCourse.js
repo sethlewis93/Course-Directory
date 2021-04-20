@@ -3,8 +3,6 @@ import Form from "./Form";
 
 export default class CreateCourse extends React.Component {
   state = {
-    emailAddress: "",
-    password: "",
     title: "",
     author: "",
     description: "",
@@ -90,9 +88,8 @@ export default class CreateCourse extends React.Component {
   }
   submit = () => {
     const { context } = this.props;
+    const { emailAddress, password } = context.authenticatedUser;
     const {
-      emailAddress,
-      password,
       title,
       author,
       description,

@@ -93,12 +93,13 @@ export default class UpdateCourse extends React.Component {
 
   submit = () => {
     const { context } = this.props;
+    const { emailAddress, password } = context.authenticatedUser;
     const { title, author, description, time, materials } = this.state;
     const course = { title, author, description, time, materials };
     const id = this.props.location.pathname;
 
     context.data
-      .updateCourse(course)
+      .updateCourse(emailAddress, password, course)
       .then((errors) => {
         if (errors.length) {
           this.setState({ errors });
