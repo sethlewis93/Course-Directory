@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { apiBaseUrl } from "../config";
 
 export default function CourseDetail(props) {
   const [courseDetails, setCourseDetails] = useState([]);
   const location = useLocation();
+  const history = useHistory();
   const courseId = location.pathname;
   const { context } = props;
   const authUser = context.authenticatedUser;
@@ -17,18 +18,28 @@ export default function CourseDetail(props) {
       .catch((err) => console.log(err));
   }, [courseId]);
 
-  // materialsNeeded not rendering separate list items b/c "const materials = courseDetails.map(detail => {<li>detail.materialsNeeded</li>}) is 'not a function' "
   const {
     description,
     title,
-    student: { id, firstName, lastName, emailAddress, password } = {},
+    student: { id, firstName, lastName, emailAddress } = {},
     estimatedTime,
     materialsNeeded,
   } = courseDetails;
 
-  const deleteCourse = () => {
-    const username = emailAddress;
-    context.data.deleteCourse(username, password, courseId);
+  const handleDelete = (e) => {
+    if (authUser) {
+      e.preventDefault();
+      const plainTextPassword = authUser.password;
+      context.data
+        .deleteCourse(emailAddress, plainTextPassword, courseId)
+        .then(() => {
+          history.push("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          history.push("/error");
+        });
+    }
   };
 
   return (
@@ -39,7 +50,7 @@ export default function CourseDetail(props) {
             <Link className="button" to={`${courseId}/update`}>
               Update Course
             </Link>
-            <Link className="button" onClick={deleteCourse} to="/">
+            <Link className="button" onClick={handleDelete} to="/">
               Delete Course
             </Link>
             <Link className="button button-secondary" to="/">

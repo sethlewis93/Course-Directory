@@ -70,7 +70,6 @@ export default class UserSignIn extends Component {
           this.setState(() => ({ errors: ["Sign-in unseccessful"] }));
         } else {
           this.props.history.push("/authenticated");
-          console.log(`SUCCESS: ${emailAddress} is now signed in`);
         }
       })
       .catch((err) => {

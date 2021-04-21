@@ -1,10 +1,9 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import Form from "./Form";
-import { apiBaseUrl } from "../config";
 
-class UpdateCourse extends React.Component {
+export default class UpdateCourse extends React.Component {
   state = {
+    id: "",
     title: "",
     author: "",
     description: "",
@@ -95,21 +94,19 @@ class UpdateCourse extends React.Component {
   submit = () => {
     const { context } = this.props;
     const { emailAddress, password } = context.authenticatedUser;
-    // const { title, author, description, time, materials } = this.state;
-    // const course = { title, author, description, time, materials };
-    // const id = this.props.location.pathname;
+    const { id, title, author, description, time, materials } = this.state;
+    const course = { id, title, author, description, time, materials };
     const { match } = this.props;
     const matchParamsId = match.params.id;
-    const id = `/courses/${matchParamsId}`;
-    console.log(id);
+    const courseParam = `/courses/${matchParamsId}`;
 
     context.data
-      .updateCourse(emailAddress, password, id)
+      .updateCourse(emailAddress, password, course, courseParam)
       .then((errors) => {
         if (errors.length) {
           this.setState({ errors });
         } else {
-          this.props.history.push(`${apiBaseUrl}${id}`);
+          this.props.history.push(`${courseParam}`);
         }
       })
       .catch((err) => {
@@ -122,6 +119,3 @@ class UpdateCourse extends React.Component {
     this.props.history.push("/");
   };
 }
-
-const UpdateCourseWithRouter = withRouter(UpdateCourse);
-export default UpdateCourseWithRouter;

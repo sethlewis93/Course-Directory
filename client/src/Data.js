@@ -87,19 +87,17 @@ export default class Data {
     });
     if (response.status === 201) {
       return [];
-    } else if (response.status === 404) {
+    } else if (response.status === 400) {
       return response.json().then((data) => {
         return data.errors;
       });
     } else {
-      return response.json().then((error) => {
-        console.log(error);
-      });
+      throw new Error();
     }
   }
 
-  async updateCourse(username, password, courseId) {
-    const response = await this.api(`${courseId}`, "PUT", null, true, {
+  async updateCourse(username, password, course, courseId) {
+    const response = await this.api(`${courseId}`, "PUT", course, true, {
       username,
       password,
     });
@@ -110,29 +108,19 @@ export default class Data {
         return data.errors;
       });
     } else {
-      return response.json().then((error) => {
-        console.log(error);
-      });
+      throw new Error();
     }
   }
 
   async deleteCourse(username, password, courseId) {
-    const response = await this.api(
-      `/courses/:${courseId}`,
-      "DELETE",
-      null,
-      true,
-      {
-        username,
-        password,
-      }
-    );
+    const response = await this.api(`${courseId}`, "DELETE", null, true, {
+      username,
+      password,
+    });
     if (response.status === 204) {
-      console.log("Course deleted");
       return [];
     } else if (response.status === 400) {
       return response.json().then((data) => {
-        console.log("Course Id does not exist");
         return data.errors;
       });
     } else {

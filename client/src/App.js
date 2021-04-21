@@ -6,7 +6,7 @@ import Header from "./Components/Header";
 import Courses from "./Components/Courses";
 import CreateCourses from "./Components/CreateCourse";
 import CourseDetail from "./Components/CourseDetail";
-import UpdateCourseWithRouter from "./Components/UpdateCourse";
+import UpdateCourse from "./Components/UpdateCourse";
 import UserSignIn from "./Components/UserSignIn";
 import UserSignUp from "./Components/UserSignUp";
 import Authenticated from "./Components/Authenticated";
@@ -23,7 +23,7 @@ const UserSignInWithContext = withContext(UserSignIn);
 const AuthUserWithContext = withContext(Authenticated);
 const userSignOutWithContext = withContext(UserSignOut);
 const CreateCoursesWithContext = withContext(CreateCourses);
-const UpdateCoursesWithContext = withContext(UpdateCourseWithRouter);
+const UpdateCoursesWithContext = withContext(UpdateCourse);
 
 export default function App() {
   return (

@@ -6,7 +6,6 @@ export default class CreateCourse extends React.Component {
     title: "",
     author: "",
     description: "",
-    userId: "",
     estimatedTime: "",
     materialsNeeded: "",
     errors: [],
@@ -88,21 +87,22 @@ export default class CreateCourse extends React.Component {
   }
   submit = () => {
     const { context } = this.props;
-    const { emailAddress, password } = context.authenticatedUser;
+    const { id, emailAddress, password } = context.authenticatedUser;
     const {
       title,
       author,
       description,
-      userId,
       estimatedTime,
       materialsNeeded,
     } = this.state;
 
+    const userId = id;
+
     const course = {
       title,
       author,
-      description,
       userId,
+      description,
       estimatedTime,
       materialsNeeded,
     };
@@ -114,8 +114,7 @@ export default class CreateCourse extends React.Component {
           this.setState({ errors });
           console.log(errors);
         } else {
-          this.props.history.push("/courses");
-          console.log(`${course} has been sucessfully created`);
+          this.props.history.push("/");
         }
       })
       .catch((err) => {

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Form from "./Form";
 
-// Currently the Form is rendered but the state does not change. Looking into why...
 export default class UserSignUp extends Component {
   state = {
     firstName: "",
@@ -94,9 +93,6 @@ export default class UserSignUp extends Component {
         } else {
           context.actions.signIn(emailAddress, password).then(() => {
             this.props.history.push("/authenticated");
-            console.log(
-              `${emailAddress} is sucessfully signed up and authenticated`
-            );
           });
         }
       })
