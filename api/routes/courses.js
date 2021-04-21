@@ -72,7 +72,7 @@ router.put(
       course = await Courses.findByPk(req.params.id);
       if (course) {
         await course.update(req.body);
-        res.status(204).end();
+        res.status(201).end();
       } else {
         const err = new Error();
         err.status = 404;

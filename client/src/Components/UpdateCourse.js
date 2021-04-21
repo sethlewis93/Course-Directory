@@ -1,8 +1,9 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import Form from "./Form";
 import { apiBaseUrl } from "../config";
 
-export default class UpdateCourse extends React.Component {
+class UpdateCourse extends React.Component {
   state = {
     title: "",
     author: "",
@@ -96,7 +97,10 @@ export default class UpdateCourse extends React.Component {
     const { emailAddress, password } = context.authenticatedUser;
     // const { title, author, description, time, materials } = this.state;
     // const course = { title, author, description, time, materials };
-    const id = this.props.location.pathname;
+    // const id = this.props.location.pathname;
+    const { match } = this.props;
+    const matchParamsId = match.params.id;
+    const id = `/courses/${matchParamsId}`;
     console.log(id);
 
     context.data
@@ -118,3 +122,6 @@ export default class UpdateCourse extends React.Component {
     this.props.history.push("/");
   };
 }
+
+const UpdateCourseWithRouter = withRouter(UpdateCourse);
+export default UpdateCourseWithRouter;
