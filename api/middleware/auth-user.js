@@ -20,7 +20,7 @@ exports.authenticateUser = async (req, res, next) => {
         // Store the user on the Request object.
         req.currentUser = user;
       } else {
-        message = `Authentication failure for username: ${user.username}`;
+        message = `Authentication failure for username: ${user.emailAddress}`;
       }
     } else {
       message = `User not found for username: ${credentials.name}`;

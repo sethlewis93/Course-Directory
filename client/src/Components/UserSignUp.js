@@ -14,7 +14,6 @@ export default class UserSignUp extends Component {
 
   render() {
     const { firstName, lastName, emailAddress, password, errors } = this.state;
-
     return (
       <div className="form--centered">
         <h1>Sign Up</h1>

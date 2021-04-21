@@ -31,8 +31,6 @@ export default function CourseDetail(props) {
     context.data.deleteCourse(username, password, courseId);
   };
 
-  console.log(typeof description);
-
   return (
     <main>
       <div className="actions--bar">
