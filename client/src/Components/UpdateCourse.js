@@ -94,17 +94,18 @@ export default class UpdateCourse extends React.Component {
   submit = () => {
     const { context } = this.props;
     const { emailAddress, password } = context.authenticatedUser;
-    const { title, author, description, time, materials } = this.state;
-    const course = { title, author, description, time, materials };
+    // const { title, author, description, time, materials } = this.state;
+    // const course = { title, author, description, time, materials };
     const id = this.props.location.pathname;
+    console.log(id);
 
     context.data
-      .updateCourse(emailAddress, password, course)
+      .updateCourse(emailAddress, password, id)
       .then((errors) => {
         if (errors.length) {
           this.setState({ errors });
         } else {
-          this.props.history.push(`${apiBaseUrl}/${id}`);
+          this.props.history.push(`${apiBaseUrl}${id}`);
         }
       })
       .catch((err) => {

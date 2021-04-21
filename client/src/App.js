@@ -15,7 +15,7 @@ import NotFound from "./Components/NotFound";
 
 import withContext from "./Context";
 import PrivateRoute from "./PrivateRoute";
-// const CoursesWithContext = withContext(Courses);
+
 const HeaderWithContext = withContext(Header);
 const CourseDetailWithContext = withContext(CourseDetail);
 const UserSignUpWithContext = withContext(UserSignUp);
