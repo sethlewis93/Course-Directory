@@ -5,15 +5,38 @@ export default class UpdateCourse extends React.Component {
   state = {
     id: "",
     title: "",
-    author: "",
+    student: "",
     description: "",
-    time: "",
-    materials: "",
+    estimatedTime: "",
+    materialsNeeded: "",
     errors: [],
   };
 
+  componentDidMount() {
+    const {
+      title,
+      description,
+      student,
+      estimatedTime,
+      materialsNeeded,
+    } = this.props.location.state;
+    this.setState(() => ({
+      title,
+      description,
+      student,
+      estimatedTime,
+      materialsNeeded,
+    }));
+  }
   render() {
-    const { title, author, description, time, materials, errors } = this.state;
+    const {
+      title,
+      description,
+      student,
+      estimatedTime,
+      materialsNeeded,
+      errors,
+    } = this.state;
     return (
       <main>
         <div className="wrap">
@@ -38,11 +61,11 @@ export default class UpdateCourse extends React.Component {
 
                     <label>Course Author</label>
                     <input
-                      id="author"
-                      name="author"
+                      id="student"
+                      name="student"
                       type="text"
-                      value={author}
-                      onChange={this.change}
+                      value={`${student.firstName} ${student.lastName}`}
+                      disabled
                     />
 
                     <label>Course Description</label>
@@ -56,18 +79,18 @@ export default class UpdateCourse extends React.Component {
                   <div>
                     <label>Estimated Time</label>
                     <input
-                      id="time"
-                      name="time"
+                      id="estimatedTime"
+                      name="estimatedTime"
                       type="text"
-                      value={time}
+                      value={estimatedTime}
                       onChange={this.change}
                     />
 
                     <label>Materials Needed</label>
                     <textarea
-                      id="materials"
-                      name="materials"
-                      value={materials}
+                      id="materialsNeeded"
+                      name="materialsNeeded"
+                      value={materialsNeeded}
                       onChange={this.change}
                     />
                   </div>
@@ -94,8 +117,22 @@ export default class UpdateCourse extends React.Component {
   submit = () => {
     const { context } = this.props;
     const { emailAddress, password } = context.authenticatedUser;
-    const { id, title, author, description, time, materials } = this.state;
-    const course = { id, title, author, description, time, materials };
+    const {
+      id,
+      title,
+      description,
+      student,
+      estimatedTime,
+      materialsNeeded,
+    } = this.state;
+    const course = {
+      id,
+      title,
+      description,
+      student,
+      estimatedTime,
+      materialsNeeded,
+    };
     const { match } = this.props;
     const matchParamsId = match.params.id;
     const courseParam = `/courses/${matchParamsId}`;

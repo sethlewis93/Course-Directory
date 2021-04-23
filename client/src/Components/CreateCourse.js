@@ -12,9 +12,10 @@ export default class CreateCourse extends React.Component {
   };
 
   render() {
+    const { context } = this.props;
+    const { firstName, lastName } = context.authenticatedUser;
     const {
       title,
-      author,
       description,
       estimatedTime,
       materialsNeeded,
@@ -48,8 +49,8 @@ export default class CreateCourse extends React.Component {
                       id="author"
                       name="author"
                       type="text"
-                      value={author}
-                      onChange={this.change}
+                      value={`${firstName} ${lastName}`}
+                      disabled
                     />
 
                     <label>Course Description</label>

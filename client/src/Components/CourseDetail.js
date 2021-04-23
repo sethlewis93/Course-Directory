@@ -47,7 +47,19 @@ export default function CourseDetail(props) {
       <div className="actions--bar">
         {authUser && authUser.id === id ? (
           <div className="wrap">
-            <Link className="button" to={`${courseId}/update`}>
+            <Link
+              className="button"
+              to={{
+                pathname: `${courseId}/update`,
+                state: {
+                  title,
+                  description,
+                  student: { firstName, lastName },
+                  estimatedTime,
+                  materialsNeeded,
+                },
+              }}
+            >
               Update Course
             </Link>
             <Link className="button" onClick={handleDelete} to="/">
