@@ -153,6 +153,6 @@ export default class UpdateCourse extends React.Component {
   };
 
   cancel = () => {
-    this.props.history.push("/");
+    this.props.history.push(`/courses/${this.props.match.params.id}`);
   };
 }
