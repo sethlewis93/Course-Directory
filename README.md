@@ -8,8 +8,8 @@ Full stack application empowering users to view a list of courses and the detail
 
 1. Download project files. 
 2. Using your command line tool of choice:
-    a. Navigate to `/api` and run `npm install` to get the dependencies then run `npm start` to fire up the db server
-    b. Navigate to `/client`, run `npm install` then run `npm start`. The project will open `localhost:3000`
+    + Navigate to `/api` and run `npm install` to get the dependencies then run `npm start` to fire up the db server
+    + Navigate to `/client`, run `npm install` then run `npm start`. The project will open `localhost:3000`
 3. Click on courses to view details
 4. Sign up to create an account 
 5. Create your own course (only if authenticated user) and fill in the course details.
